@@ -1,0 +1,14 @@
+1.create a header
+2.create a hero section with 3 images slide
+3.crete a Product
+4.create  a Details page with pathname state change example :/products/id=124f
+5.create admin page with -
+    5.0 ADD PRODUCT
+    5.0.1 EDIT PRODUCT / DELETE PRODUCT
+ 5.1 title
+ 5.2 description
+ 5.3 price
+ 5.4 file (image) upload
+ 5.5 telephone number for call
+ 5.6 random view number
+6.create a footer
