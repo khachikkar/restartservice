@@ -13,7 +13,7 @@ const Adminka = () => {
        }else{
            navigate("/")
        }
-    }, []);
+    }, [navigate]);
 
 
     return (
