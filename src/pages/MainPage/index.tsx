@@ -1,7 +1,9 @@
+import Hero from "../../components/hero";
+
 const MainPage = () => {
     return (
-        <div>
-            Main Page
+        <div className="mainCont">
+            <Hero />
         </div>
     )
 }

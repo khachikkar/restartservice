@@ -5,6 +5,7 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import WashingDetails from "./pages/washingDetails";
 import Adminka from "./pages/Adminka";
+import Footer from "./components/footer";
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/details/:id" element={<WashingDetails />} />
                 <Route path="/adminka" element={<Adminka />} />
             </Routes>
+            <Footer />
         </BrowserRouter>
 
     </div>
