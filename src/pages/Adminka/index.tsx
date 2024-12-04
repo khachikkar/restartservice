@@ -15,6 +15,7 @@ const Adminka = () => {
         console.log("hello")
     }
 
+
     useEffect(() => {
         const pass : string | null =  prompt("Pls write your Password")
        if (pass === adminPass.password){

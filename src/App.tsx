@@ -6,11 +6,17 @@ import MainPage from "./pages/MainPage";
 import WashingDetails from "./pages/washingDetails";
 import Adminka from "./pages/Adminka";
 import Footer from "./components/footer";
+import {RestartContext} from "./context/contex";
 
+
+const data : object = []
 
 function App() {
   return (
     <div className="App">
+<RestartContext.Provider value={{data}}>
+
+
         <BrowserRouter>
             <MyHeader />
             <Routes>
@@ -20,7 +26,7 @@ function App() {
             </Routes>
             <Footer />
         </BrowserRouter>
-
+</RestartContext.Provider>
     </div>
   );
 }
