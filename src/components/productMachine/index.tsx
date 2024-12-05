@@ -22,8 +22,8 @@ const ProductMachine: React.FC<ProductMachineProps> = ({ item }) => {
 
     return (
         <div className="product-card">
-            {/*<img alt={image} className="product-card__image" src={image} />*/}
-            <Image alt={image} src={image} style={{height:"400px"}}  />
+            <img alt={image} className="product-card__image" src={image} />
+            {/*<Image alt={image} src={image} style={{height:"400px"}}  />*/}
             <div>
                 <p className="product-card__brand">{item.name}</p>
                 <p className="product-card__description">{item.description}</p>

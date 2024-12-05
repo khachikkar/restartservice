@@ -2,7 +2,7 @@ import Hero from "../../components/hero";
 import {supabase} from "../../services/supabase/supabase";
 import {useEffect, useState} from "react";
 import ProductMachine from "../../components/productMachine";
-
+import {Button} from  "antd";
 
 const MainPage = () => {
 
@@ -17,7 +17,9 @@ type DataType = {
 const [mdata, setMdata] = useState<DataType[]>([])
 
 
-
+    const handleClick = () => {
+        window.location.href = `tel:077341019`;
+    };
 
 
 
@@ -56,17 +58,24 @@ const [mdata, setMdata] = useState<DataType[]>([])
 
     return (
         <div className="mainCont">
-            <Hero />
+            <Hero/>
+            <div className="Ad">
+                <h3 style={{color:"crimson"}}>Հասցե: Մալաթիա-Սեբաստիա 165/1</h3>
+                <h2>Մինչև ամանոր, Դեկտեմբերի 31-ը մեր ողջ տեսականու համար կգործի մինչև <strong>30%</strong> զեղչ: Շտապեք~</h2>
+                <Button onClick={handleClick}>Զանգահարեք հիմա</Button>
+            </div>
             <div className="prodCont">
                 <h2>Մեր Լվացքի մեքենաները</h2>
                 <div className="products">
-                {
-                    mdata?.map((item)=>{
-                        return <ProductMachine key={item.name} item={item} />
-                    })
-                }
+                    {
+                        mdata?.map((item) => {
+                            return <ProductMachine key={item.name} item={item}/>
+                        })
+                    }
                 </div>
+
             </div>
+            <Button type="primary" className="topbutton"><a href="#">TOP</a></Button>
         </div>
     )
 }
