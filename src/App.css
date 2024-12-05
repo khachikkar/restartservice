@@ -22,7 +22,7 @@
     display: grid;
     gap: 16px;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    background-color: red;
+    /*background-color: red;*/
     width: 100%; /* Ensure it stretches to the container's full width */
     max-width: 1328px; /* Constrain it to the intended width */
     margin: 32px auto; /* Center the container */
