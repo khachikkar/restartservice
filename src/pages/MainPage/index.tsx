@@ -47,7 +47,6 @@ const [mdata, setMdata] = useState<DataType[]>([])
 
 
 
-
     useEffect(() => {
       getProducts()
 
@@ -75,7 +74,7 @@ const [mdata, setMdata] = useState<DataType[]>([])
                 </div>
 
             </div>
-            <Button type="primary" className="topbutton"><a href="#">TOP</a></Button>
+            <Button type="primary" className="topbutton"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >TOP</Button>
         </div>
     )
 }

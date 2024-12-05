@@ -1,6 +1,6 @@
 
 import "./index.css"
-import {Button, Image} from "antd";
+import {Button} from "antd";
 interface ProductMachineProps {
     item: {
         id: number;
