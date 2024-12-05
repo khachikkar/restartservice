@@ -17,7 +17,7 @@ const Hero = ()=>{
 
 
     return(
-    <Carousel afterChange={onChange}>
+    <Carousel autoplay afterChange={onChange}>
         <div>
             <img style={contentStyle} src="https://www.domesticandgeneral.com/blog/cms/assets/b7728dd9-d1d2-4a3a-b059-d30a5f9826d0/man-crouching-by-washing-machine-compressed.png" alt="img" />
         </div>
