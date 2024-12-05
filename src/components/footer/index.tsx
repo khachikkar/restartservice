@@ -1,5 +1,6 @@
 import { GithubOutlined, InstagramOutlined, FacebookOutlined } from '@ant-design/icons';
-import { Row, Col } from 'antd';
+import {Row, Col, Button} from 'antd';
+import {Link} from "react-router-dom";
 
 const Footer = () => {
     return (
@@ -23,6 +24,7 @@ const Footer = () => {
                     <a href="https://facebook.com/khachik.karapetyan2" target="_blank" rel="noopener noreferrer" style={iconStyle}>
                         <FacebookOutlined />
                     </a>
+                    <Link to="/adminka"><Button>Admin Panel</Button></Link>
                 </Col>
             </Row>
         </footer>
