@@ -1,96 +1,142 @@
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {adminPass} from "../../constants/constants";
-import {Form, Input, Button} from 'antd';
+import {Button, Form, Input, notification, Upload} from "antd";
 import {useForm} from "antd/es/form/Form";
 
+import {supabase} from "../../services/supabase/supabase";
 
+type bucketParam = {
+    bucket: string;
+    file: File;
+};
 
-const Adminka = () => {
+const uploadFileToBucket = async ({ bucket, file }: bucketParam) => {
+    const fileName = `${Date.now()}`;
+    const { error } = await supabase.storage.from(bucket).upload(fileName, file);
 
-    const navigate = useNavigate()
-    const [form] = useForm()
-
-    const handleAddProduct = () =>{
-        console.log("hello")
+    if (error) {
+        throw new Error(error.message);
     }
 
+    const { data: publicUrl } = supabase.storage.from(bucket).getPublicUrl(fileName);
+    if (!publicUrl) {
+        throw new Error("Failed to get public URL");
+    }
+
+    return publicUrl;
+};
+
+const Adminka = () => {
+    const navigate = useNavigate();
+    const [form] = useForm();
+    const [load, setLoad] = useState(false);
+
+
+    const handleAddProduct = async (values: any) => {
+
+        console.log(values, "values");
+
+        try {
+            setLoad(true)
+            const file = values.productImageUrl[0]?.originFileObj; // Access file from Upload component
+
+            if (!file) {
+                alert("Please upload a product image.");
+                return;
+            }
+
+            const imageUrl = await uploadFileToBucket({ bucket: "restart", file });
+
+            console.log(imageUrl , "imageUURL");
+
+            const {  error } = await supabase.from("products").insert([
+                {
+                    name: values.productName,
+                    description: values.productDescription,
+                    price: parseFloat(values.productPrice),
+                    image_url: imageUrl,
+                },
+            ]);
+
+            if (error) {
+               console.log(error.message);
+            }
+
+           notification.success({
+               message: "Արտադրանքը հաջողությամբ ավելացավ",
+           })
+            form.resetFields();
+        } catch (error) {
+            alert("Error adding product");
+        }finally {
+            setLoad(false)
+        }
+    };
 
     useEffect(() => {
-        const pass : string | null =  prompt("Pls write your Password")
-       if (pass === adminPass.password){
-          alert("Welcome")
-       }else{
-           navigate("/")
-       }
+        const pass: string | null = prompt("Գրեք Ձեր գաղտնաբառը");
+        if (pass === adminPass.password) {
+            alert("Բարի գալուստ!");
+        } else {
+            navigate("/");
+        }
     }, [navigate]);
 
-
     return (
-        <div style={{height:"100vh"}}>
-            <h1>Admin Pannel</h1>
+        <div style={{ height: "100vh" }}>
+            <h1>Admin Panel</h1>
             <Form layout="vertical" form={form} onFinish={handleAddProduct}>
+                <Form.Item
+                    label="Ապրանքի անունը"
+                    name="productName"
+                    rules={[{ required: true, message: "Please enter a Product Name" }]}
+                >
+                    <Input placeholder="օրինակ: Բեկո 50կգ" />
+                </Form.Item>
 
+                <Form.Item
+                    label="Ապրանքի Նկարագրությունը"
+                    name="productDescription"
+                    rules={[{ required: true, message: "Please enter a Product Description" }]}
+                >
+                    <Input placeholder="օրինակ: Նոր, վերանորոգված կամ օգտագործված" />
+                </Form.Item>
 
-            <Form.Item
-                label="Product Name"
-                name="productName"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please enter an Product Name",
-                    }
-                ]}
-            >
-                <Input type="text" placeholder="Enter Product Name"/>
-            </Form.Item>
+                <Form.Item
+                    label="Ապրանքի Նկարը"
+                    name="productImageUrl"
+                    rules={[{ required: true, message: "Please upload a product image." }]}
+                    valuePropName="fileList"
+                    getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
+                >
+                    <Upload
+                        beforeUpload={() => false}
+                        accept="image/*"
+                        maxCount={1}
+                        listType="picture"
+                    >
+                        <Button>Բեռնել Նկարը</Button>
+                    </Upload>
+                </Form.Item>
 
+                <Form.Item
+                    label="Ապրանքի Գինը"
+                    name="productPrice"
+                    rules={[
+                        { required: true, message: "Please enter a valid Product Price" },
+                        { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: "Price must be a valid number (e.g., 19.99)" },
+                    ]}
+                >
+                    <Input placeholder="օրինակ 30000" />
+                </Form.Item>
 
-
-            <Form.Item
-                label="Product Description"
-                name="productDescription"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please enter an Product Description",
-                    }
-                ]}
-            >
-                <Input type="text" placeholder="Enter Product Description"/>
-            </Form.Item>
-
-            {/*    Change a upload file */}
-            <Form.Item
-                label="Product Image URL"
-                name="productImageUrl"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please enter an Product Image URL",
-                    }
-                ]}
-            >
-                <Input type="file" placeholder="Enter Product Image URL"/>
-            </Form.Item>
-
-            <Form.Item
-                label="Product Price"
-                name="productPrice"
-                rules={[
-                    {
-                        required: true,
-                        message: "Please enter an Product Price",
-                    }
-                ]}
-            >
-                <Input type="number" placeholder="Enter Product Price"/>
-            </Form.Item>
-
-          <Button type="primary" htmlType="submit">Save Product</Button>
-        </Form>
+                <Button loading={load} type="primary" htmlType="submit">
+                    Ավելացնել Ապրանք
+                </Button>
+            </Form>
         </div>
-    )
-}
+    );
+};
 
-export default Adminka
+export default Adminka;
