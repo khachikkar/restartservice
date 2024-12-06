@@ -57,6 +57,7 @@ const Adminka = () => {
                     image_url: imageUrl,
                     category: values.productCategory,
                     prevPrice: values.productPrevPrice,
+                    productCode: values.productCode,
                 },
             ]);
 
@@ -102,6 +103,14 @@ const Adminka = () => {
                     rules={[{ required: true, message: "Please enter a Product Description" }]}
                 >
                     <Input placeholder="օրինակ: Նոր, վերանորոգված կամ օգտագործված" />
+                </Form.Item>
+
+                <Form.Item
+                    label="Ապրանքի Կոդը"
+                    name="productCode"
+                    rules={[{ required: true, message: "Please enter a Product Code" }]}
+                >
+                    <Input placeholder="օրինակ: 001 կամ 004 ..." />
                 </Form.Item>
 
                 <Form.Item // catregoru

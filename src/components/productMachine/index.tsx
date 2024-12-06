@@ -11,6 +11,7 @@ interface ProductMachineProps {
         image_url: string;
         category: string;
         prevPrice: number;
+        productCode : string
     };
 }
 
@@ -31,8 +32,11 @@ const ProductMachine: React.FC<ProductMachineProps> = ({ item }) => {
             {/*<Image alt={image} src={image} style={{height:"400px"}}  />*/}
             <div className="infop">
                 <div>
-                    <p className="product-card__brand">{item.name}</p>
-                    <p  className="product-card__description status">{item.description}</p>
+                    <div className="nn">
+                        <p className="product-card__brand">{item.name}</p>
+                        <span className="product-card__brand">{item.productCode}</span>
+                    </div>
+                    <p className="product-card__description status">{item.description}</p>
                 </div>
                 <div>
                     <div className="pp">

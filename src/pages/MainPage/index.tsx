@@ -17,6 +17,7 @@ type DataType = {
         price: number;
         category: string;
         prevPrice: number;
+        productCode: string;
 };
 
 const [mdata, setMdata] = useState<DataType[]>([])

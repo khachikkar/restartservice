@@ -58,15 +58,31 @@
 .status{
     margin: 0.2rem 0;
     background-color: #92DCE5;
-    padding: 4px;
+    padding:2px 4px;
     font-size: 14px;
     border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .pp{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+
+.nn{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    span{
+        font-style: italic;
+        font-weight: normal;
+        font-size: 14px;
+    }
 }
 
 .prevprice{
