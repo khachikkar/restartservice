@@ -33,7 +33,7 @@ const handledetails = () =>{
     setSearchParams(searchParams);
 
 
-    navigate(`/details/?${searchParams.toString()}`)
+    navigate(`/details/?${searchParams.toString()}`, { state: { product: item } })
 }
 
 

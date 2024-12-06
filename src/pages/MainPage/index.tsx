@@ -78,7 +78,7 @@ return (
                 <div className="products">
                     {
                         mdata?.reverse().map((item) => {
-                            return <ProductMachine key={item.name} item={item}/>
+                            return <ProductMachine key={item.id} item={item}/>
                         })
                     }
                 </div>
