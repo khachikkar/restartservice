@@ -77,7 +77,7 @@ return (
                 <h2>Մեր Լվացքի մեքենաները</h2>
                 <div className="products">
                     {
-                        mdata?.map((item) => {
+                        mdata?.reverse().map((item) => {
                             return <ProductMachine key={item.name} item={item}/>
                         })
                     }
