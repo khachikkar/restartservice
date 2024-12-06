@@ -3,6 +3,7 @@ import {supabase} from "../../services/supabase/supabase";
 import {useEffect, useState} from "react";
 import ProductMachine from "../../components/productMachine";
 import {Button} from  "antd";
+import {useNavigate} from "react-router-dom";
 
 const MainPage = () => {
 
@@ -16,14 +17,11 @@ type DataType = {
 
 const [mdata, setMdata] = useState<DataType[]>([])
 
-
-    const handleClick = () => {
+const handleClick = () => {
         window.location.href = `tel:077341019`;
-    };
+};
 
-
-
-    const getProducts = async () => {
+const getProducts = async () => {
         try {
             const { data, error } = await supabase
                 .from('products')  // Make sure the table name is correct
@@ -47,15 +45,25 @@ const [mdata, setMdata] = useState<DataType[]>([])
 
 
 
-    useEffect(() => {
+useEffect(() => {
       getProducts()
 
     }, [])
 
-    console.log(mdata, "mdata")
+console.log(mdata, "mdata")
 
 
-    return (
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const host = window.location.hostname; // e.g., admin.restartservice.netlify.app
+        if (host.startsWith("admin")) {
+            navigate("/adminka"); // Redirect to the admin page
+        }
+    }, [navigate]);
+
+
+return (
         <div className="mainCont">
             <Hero/>
             <div className="Ad">
