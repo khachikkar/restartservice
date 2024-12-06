@@ -25,7 +25,7 @@ function App() {
             <MyHeader />
             <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/details/:id" element={<WashingDetails />} />
+                <Route path="/details" element={<WashingDetails />} />
                 <Route path="/adminka" element={<Adminka />} />
             </Routes>
             <Footer />

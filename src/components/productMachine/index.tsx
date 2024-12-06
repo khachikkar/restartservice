@@ -2,6 +2,8 @@
 import "./index.css"
 import {Button} from "antd";
 import {handleClick} from "../../helpers/telnum";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {useState} from "react";
 interface ProductMachineProps {
     item: {
         id: number;
@@ -17,12 +19,28 @@ interface ProductMachineProps {
 
 const ProductMachine: React.FC<ProductMachineProps> = ({ item }) => {
 
+const image = JSON.parse(item.image_url).publicUrl
 
-    const image = JSON.parse(item.image_url).publicUrl
+
+const [searchParams, setSearchParams] = useSearchParams();
+const navigate = useNavigate()
 
 
-    return (
-        <div className="product-card">
+const handledetails = () =>{
+
+    searchParams.set("id", item.id.toString());
+
+
+    setSearchParams(searchParams);
+
+
+    navigate(`/details/?${searchParams.toString()}`)
+}
+
+
+
+return (
+        <div className="product-card" onClick={handledetails}>
 
             <div className="hatuk">
                 Հատուկ Առաջարկ
@@ -47,7 +65,7 @@ const ProductMachine: React.FC<ProductMachineProps> = ({ item }) => {
                 </div>
             </div>
         </div>
-    );
+);
 };
 
 export default ProductMachine;
