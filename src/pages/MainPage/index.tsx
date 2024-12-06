@@ -23,7 +23,7 @@ type DataType = {
 const [mdata, setMdata] = useState<DataType[]>([])
 
 
-const getProducts = async () => {
+    const getProducts = async () => {
         try {
             const { data, error } = await supabase
                 .from('products')  // Make sure the table name is correct
