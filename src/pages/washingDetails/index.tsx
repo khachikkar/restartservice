@@ -1,3 +1,5 @@
+
+
 const WashingDetails = () => {
     return (
         <div>

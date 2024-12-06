@@ -3,7 +3,6 @@ import "./index.css"
 import {Button} from "antd";
 import {handleClick} from "../../helpers/telnum";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {useState} from "react";
 interface ProductMachineProps {
     item: {
         id: number;
