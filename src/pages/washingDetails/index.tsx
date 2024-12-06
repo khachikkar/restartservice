@@ -76,6 +76,13 @@ const [mdata, setMdata] = useState<DataType[]>([])
 
     return (
         <div className="wDetails">
+
+
+
+
+
+
+
             {data ? (
                 <>
                     <h2>{data.name}</h2>

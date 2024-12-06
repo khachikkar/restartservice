@@ -2,10 +2,16 @@ import Hero from "../../components/hero";
 import {supabase} from "../../services/supabase/supabase";
 import {useEffect, useState} from "react";
 import ProductMachine from "../../components/productMachine";
-import {Button} from  "antd";
+import {Button} from "antd";
 import {useNavigate} from "react-router-dom";
 import {handleClick} from "../../helpers/telnum";
+import {Link} from "react-router-dom";
 
+import fb from "../../img/fb.png"
+import insta from "../../img/insta.png"
+import list from "../../img/list.png"
+
+import comapny from "../../img/163281306_294588455414404_6161288083343353692_n.jpg"
 
 const MainPage = () => {
 
@@ -73,6 +79,9 @@ return (
                 <h2>Մինչև ամանոր, Դեկտեմբերի 31-ը մեր ողջ տեսականու համար կգործի մինչև <strong>30%</strong> զեղչ: Շտապեք~</h2>
                 <Button onClick={handleClick}>Զանգահարեք հիմա</Button>
             </div>
+
+
+
             <div className="prodCont">
                 <h2>Մեր Լվացքի մեքենաները</h2>
                 <div className="products">
@@ -84,9 +93,44 @@ return (
                 </div>
 
             </div>
-            <Button type="primary" className="topbutton"  onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} >TOP</Button>
+
+
+            <div className="company">
+                <h2>Մեր ընկերությունը`</h2>
+
+                <div className="acompany">
+
+                    <div>
+                        <p>Restart Service - ձեր վստահելի գործընկերը` կենցաղային տեխնիկայի բոլոր կարիքների համար: Մենք
+                            մասնագիտացած ենք լվացքի մեքենաների, սառնարանների և այլ հիմնական տեխնիկայի վերանորոգման մեջ:
+                            Մեր փորձառու տեխնիկները բերում են տարիների փորձ և նվիրվածություն՝ արագ և հուսալի սպասարկում
+                            ապահովելու համար:
+                        </p>
+                        <div>
+                            <h1>Աշխատանքային օրեր</h1>
+                            <h2>Երկուշաբթի-Կիրակի : 09:00 - 20:00</h2>
+                        </div>
+                    </div>
+                    <img src={comapny} alt="img"/>
+                </div>
+            </div>
+
+
+
+            <div className="social">
+<h2>We are on Social</h2>
+                <div>
+                    <Link to="https://www.list.am/user/1845238" target="_blank"> <img src={list} alt={list}/> </Link>
+                    <Link to="https://www.facebook.com/restartservice1" target="_blank"> <img src={fb} alt={fb}/> </Link>
+                    <Link to="https://www.instagram.com/restartservice1/" target="_blank"> <img src={insta} alt={insta}/> </Link>
+                </div>
+            </div>
+
+
+            <Button type="primary" className="topbutton"
+                    onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>TOP</Button>
         </div>
-    )
+)
 }
 
 export default MainPage
