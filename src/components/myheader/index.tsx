@@ -1,14 +1,9 @@
 import {Button} from "antd";
 import logo from "../../img/logo.png"
 import {Link} from "react-router-dom";
-
+import {handleClick} from "../../helpers/telnum";
 
 const MyHeader = () => {
-
-    const handleClick = () => {
-        window.location.href = `tel:077341019`;
-    };
-
 
 
     return (

@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import ProductMachine from "../../components/productMachine";
 import {Button} from  "antd";
 import {useNavigate} from "react-router-dom";
+import {handleClick} from "../../helpers/telnum";
+
 
 const MainPage = () => {
 
@@ -13,13 +15,12 @@ type DataType = {
         description: string;
         image_url: string;
         price: number;
+        category: string;
+        prevPrice: number;
 };
 
 const [mdata, setMdata] = useState<DataType[]>([])
 
-const handleClick = () => {
-        window.location.href = `tel:077341019`;
-};
 
 const getProducts = async () => {
         try {

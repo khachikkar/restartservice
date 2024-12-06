@@ -1,9 +1,8 @@
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {adminPass} from "../../constants/constants";
-import {Button, Form, Input, notification, Upload} from "antd";
+import {Button, Form, Input, notification, Select, Upload} from "antd";
 import {useForm} from "antd/es/form/Form";
-
 import {supabase} from "../../services/supabase/supabase";
 
 type bucketParam = {
@@ -56,6 +55,8 @@ const Adminka = () => {
                     description: values.productDescription,
                     price: parseFloat(values.productPrice),
                     image_url: imageUrl,
+                    category: values.productCategory,
+                    prevPrice: values.productPrevPrice,
                 },
             ]);
 
@@ -84,7 +85,7 @@ const Adminka = () => {
     }, [navigate]);
 
     return (
-        <div style={{ height: "100vh" }}>
+        <div style={{ height: "100vh", width: "400px", padding:"10px" }}>
             <h1>Admin Panel</h1>
             <Form layout="vertical" form={form} onFinish={handleAddProduct}>
                 <Form.Item
@@ -103,6 +104,26 @@ const Adminka = () => {
                     <Input placeholder="օրինակ: Նոր, վերանորոգված կամ օգտագործված" />
                 </Form.Item>
 
+                <Form.Item // catregoru
+                    label="Ապրանքի Կատեգորիան"
+                    name="productCategory"
+                    rules={[{ required: true, message: "Please enter a Product Description" }]}
+                >
+                    <Select placeholder="օրինակ: Սառնարան">
+                        {
+                            ["Սառնարան", "ԼվացքիՄեքենա", "Գազօջախ"].map((item)=>{
+                                return(
+                                    <Select.Option
+                                        key={item}
+                                        value={item}>
+                                        {item}
+                                    </Select.Option>
+                                )
+                            })
+                        }
+                    </Select>
+                </Form.Item>
+
                 <Form.Item
                     label="Ապրանքի Նկարը"
                     name="productImageUrl"
@@ -119,6 +140,19 @@ const Adminka = () => {
                         <Button>Բեռնել Նկարը</Button>
                     </Upload>
                 </Form.Item>
+
+
+                <Form.Item
+                    label="Ապրանքի Նախկին Գինը"
+                    name="productPrevPrice"
+                    rules={[
+                        { required: true, message: "Please enter a valid Product Previous Price" },
+                        { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: "Price must be a valid number (e.g., 19.99)" },
+                    ]}
+                >
+                    <Input placeholder="օրինակ 30000" />
+                </Form.Item>
+
 
                 <Form.Item
                     label="Ապրանքի Գինը"
