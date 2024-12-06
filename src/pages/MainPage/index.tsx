@@ -118,11 +118,12 @@ return (
 
 
             <div className="social">
-<h2>We are on Social</h2>
+<h2>Մենք Սոցիալական ցանցերում</h2>
                 <div>
                     <Link to="https://www.list.am/user/1845238" target="_blank"> <img src={list} alt={list}/> </Link>
                     <Link to="https://www.facebook.com/restartservice1" target="_blank"> <img src={fb} alt={fb}/> </Link>
                     <Link to="https://www.instagram.com/restartservice1/" target="_blank"> <img src={insta} alt={insta}/> </Link>
+                    <span>Հեռ: 098 20 60 64</span>
                 </div>
             </div>
 
