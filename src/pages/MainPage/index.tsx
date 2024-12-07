@@ -11,7 +11,6 @@ import fb from "../../img/fb.png"
 import insta from "../../img/insta.png"
 import list from "../../img/list.png"
 
-import comapny from "../../img/163281306_294588455414404_6161288083343353692_n.jpg"
 
 const MainPage = () => {
 
