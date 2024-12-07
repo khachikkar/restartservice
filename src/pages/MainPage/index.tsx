@@ -111,8 +111,8 @@ return (
                             <h2>Երկուշաբթի-Կիրակի : 09:00 - 20:00</h2>
                         </div>
                     </div>
-                    <div style={{width:"390px"}}>
-                        <img src={comapny} alt="img"/>
+                    <div className="nk" >
+                        {/*<img src={comapny} alt="img"/>*/}
                     </div>
                 </div>
             </div>
