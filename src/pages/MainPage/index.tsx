@@ -111,7 +111,9 @@ return (
                             <h2>Երկուշաբթի-Կիրակի : 09:00 - 20:00</h2>
                         </div>
                     </div>
-                    <img src={comapny} alt="img"/>
+                    <div>
+                        <img src={comapny} alt="img"/>
+                    </div>
                 </div>
             </div>
 
