@@ -135,7 +135,12 @@
 @media screen and (max-width: 800px) {
     .acompany{
         grid-template-columns: 1fr;
+
+        img{
+            overflow-x: hidden;
+        }
     }
+
 }
 
 
