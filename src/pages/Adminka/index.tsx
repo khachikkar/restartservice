@@ -456,7 +456,7 @@ const Admin = () => {
                         <Button type="primary" htmlType="submit" className="submit-button">
                             Submit
                         </Button>
-                        <Button onClick={handleCancel} className="cancel">
+                        <Button onClick={handleCancel} className="cancel-button">
                             Cancel
                         </Button>
                     </Form.Item>
