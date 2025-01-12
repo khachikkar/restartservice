@@ -15,14 +15,15 @@ function App() {
         <div className="App">
             <RestartContext.Provider value={{data}}>
                 <BrowserRouter>
-                    <MyHeader />
+
+                    <MyHeader/>
                     <Routes>
-                        <Route path="/" element={<MainPage />} />
-                        <Route path="/details" element={<WashingDetails />} />
-                        <Route path="/adminka" element={<Adminka />} />
-                        <Route path="/category/:category" element={<FilteredProducts />} />
+                        <Route path="/" element={<MainPage/>}/>
+                        <Route path="/details" element={<WashingDetails/>}/>
+                        <Route path="/adminka" element={<Adminka/>}/>
+                        <Route path="/category/:category" element={<FilteredProducts/>}/>
                     </Routes>
-                    <Footer />
+                    <Footer/>
                 </BrowserRouter>
             </RestartContext.Provider>
         </div>

@@ -3,9 +3,12 @@
     justify-content: space-between;
     align-items: center;
     padding: 16px;
+    width: 100%;
     background-color: var(--dark-bg);
-    border-bottom: 1px solid var(--neon-blue);
+    border-bottom: 1px solid white;
     box-shadow: var(--neon-glow-blue);
+    position: fixed;
+    z-index: 10;
 }
 
 .header-left,
