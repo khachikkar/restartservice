@@ -221,17 +221,17 @@ const Admin = () => {
         try {
             if (selectedImage) {
                 const { data: imageData, error: uploadError } = await supabase.storage
-                    .from('images')
+                    .from('restart')
                     .upload(`products/${selectedImage.name}`, selectedImage)
 
                 if (uploadError) throw uploadError
 
                 const { data: publicUrlData } = supabase.storage
-                    .from('images')
+                    .from('restart')
                     .getPublicUrl(`products/${selectedImage.name}`)
 
                 if (publicUrlData) {
-                    values.image_url = publicUrlData.publicUrl
+                    values.image_url = JSON.stringify({ publicUrl: publicUrlData.publicUrl })
                 }
             }
 
@@ -412,9 +412,27 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
+                        label="Code"
+                        name="productCode"
+                        rules={[{ required: true, message: 'Please input the Code!' }]}
+                        className="form-item"
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
                         label="Price"
                         name="price"
                         rules={[{ required: true, message: 'Please input the price!' }]}
+                        className="form-item"
+                    >
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Price"
+                        name="prevPrice"
+                        rules={[{ required: true, message: 'Please input the Prev price!' }]}
                         className="form-item"
                     >
                         <InputNumber style={{ width: '100%' }} />
