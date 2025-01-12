@@ -221,13 +221,13 @@ const Admin = () => {
         try {
             if (selectedImage) {
                 const { data: imageData, error: uploadError } = await supabase.storage
-                    .from('images')
+                    .from('restart')
                     .upload(`products/${selectedImage.name}`, selectedImage)
 
                 if (uploadError) throw uploadError
 
                 const { data: publicUrlData } = supabase.storage
-                    .from('images')
+                    .from('restart')
                     .getPublicUrl(`products/${selectedImage.name}`)
 
                 if (publicUrlData) {
