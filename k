@@ -46,4 +46,4 @@
 
 
 
-//popoxel data uxarkelu functionnery avelacnel mi 2 ban , vor api requesty chisht gna, kazmakerpel nor componenty  vor chisht nsten 
+//popoxel data uxarkelu functionnery avelacnel mi 2 ban , vor api requesty chisht gna, kazmakerpel nor componenty  vor chisht nsten
