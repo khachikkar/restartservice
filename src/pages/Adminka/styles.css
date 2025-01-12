@@ -1,0 +1,201 @@
+.admin-container {
+    padding: 24px;
+    background: #1a1a1a;
+    min-height: 100vh;
+    color: white;
+}
+
+.add-button {
+    margin-bottom: 24px;
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+.add-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    background: #1a1a1a !important;
+}
+
+.admin-table {
+    background: #2a2a2a;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.admin-table-row {
+    background: #2a2a2a !important;
+}
+
+.admin-table-row:hover {
+    background: #3a3a3a !important;
+}
+
+.admin-table-cell {
+    color: white !important;
+    border-bottom: 1px solid #3a3a3a !important;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.edit-button {
+    background: #2a2a2a !important;
+    border: 1px solid #4a90e2 !important;
+}
+
+.delete-button {
+    background: #2a2a2a !important;
+    border: 1px solid #ff4d4f !important;
+}
+
+/* Modal Styles */
+.admin-modal {
+    background: #1a1a1a;
+}
+
+.admin-modal .ant-modal-content {
+    background: #2a2a2a !important;
+    border-radius: 8px;
+}
+
+.admin-modal .ant-modal-header {
+    background: #2a2a2a !important;
+    border-bottom: 1px solid #3a3a3a !important;
+}
+
+.admin-modal .ant-modal-title {
+    color: white !important;
+}
+
+.admin-modal .ant-modal-close {
+    color: white !important;
+}
+
+/* Form Styles */
+.admin-form {
+    color: white;
+}
+
+.form-item {
+    margin-bottom: 16px;
+}
+
+.form-item .ant-form-item-label > label {
+    color: white !important;
+}
+
+.form-item .ant-input,
+.form-item .ant-input-number,
+.form-item .ant-select-selector,
+.form-item .ant-input-textarea {
+    background: #3a3a3a !important;
+    border: 1px solid #4a4a4a !important;
+    color: white !important;
+}
+
+.form-item .ant-select-selection-placeholder,
+.form-item .ant-select-selection-item {
+    color: white !important;
+}
+
+.form-item .ant-upload {
+    background: #3a3a3a;
+    border: 1px dashed #4a4a4a !important;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.submit-button {
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+}
+
+.submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    background: #1a1a1a !important;
+}
+
+.cancel-button {
+    background: #2a2a2a !important;
+    border: 1px solid #4a4a4a !important;
+    color: white !important;
+}
+
+/* Table header styles */
+.admin-table .ant-table-thead > tr > th {
+    background: #2a2a2a !important;
+    color: white !important;
+    border-bottom: 2px solid #3a3a3a !important;
+}
+
+/* Pagination styles */
+.admin-table .ant-pagination {
+    margin-top: 16px;
+}
+
+.admin-table .ant-pagination-item {
+    background: #2a2a2a !important;
+    border: 1px solid #3a3a3a !important;
+}
+
+.admin-table .ant-pagination-item a {
+    color: white !important;
+}
+
+.admin-table .ant-pagination-item-active {
+    border-color: #4a90e2 !important;
+}
+
+.admin-table .ant-pagination-prev button,
+.admin-table .ant-pagination-next button {
+    background: #2a2a2a !important;
+    color: white !important;
+}
+
+/* Select dropdown styles */
+.ant-select-dropdown {
+    background: #2a2a2a !important;
+}
+
+.ant-select-item {
+    color: white !important;
+}
+
+.ant-select-item-option-selected {
+    background: #3a3a3a !important;
+}
+
+.ant-select-item-option-active {
+    background: #4a4a4a !important;
+}
+
+/* Upload list styles */
+.ant-upload-list {
+    color: white !important;
+}
+
+.ant-upload-list-item {
+    border: 1px solid #3a3a3a !important;
+    background: #2a2a2a !important;
+}
+
+.ant-upload-list-item-name {
+    color: white !important;
+}
+
+/* Modal footer styles */
+.ant-modal-footer {
+    border-top: 1px solid #3a3a3a !important;
+    padding: 16px 24px !important;
+}

@@ -1,0 +1,150 @@
+.myHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background-color: var(--dark-bg);
+    border-bottom: 1px solid var(--neon-blue);
+    box-shadow: var(--neon-glow-blue);
+}
+
+.header-left,
+.header-right {
+    flex: 0 0 auto;
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-item {
+    color: var(--text-primary);
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.nav-item:hover {
+    color: var(--neon-blue);
+    text-shadow: var(--neon-glow-blue);
+    background-color: rgba(0, 243, 255, 0.1);
+}
+
+.menu-button {
+    background: transparent !important;
+    border: 1px solid var(--neon-blue) !important;
+    color: var(--neon-blue) !important;
+}
+
+.menu-button:hover {
+    color: var(--text-primary) !important;
+    border-color: var(--text-primary) !important;
+    background-color: rgba(0, 243, 255, 0.1) !important;
+}
+
+/* Mobile Drawer Styles */
+.ant-drawer.ant-drawer-right.mobile-drawer.css-dev-only-do-not-override-1x0dypw.ant-drawer-open,
+.ant-drawer.ant-drawer-right.mobile-drawer.css-dev-only-do-not-override-1vr7spz.ant-drawer-open {
+    background-color: #000000 !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-content,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-content {
+    background-color: #000000 !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-wrapper-body,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-wrapper-body {
+    background-color: #000000 !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-header,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-header {
+    background-color: #000000 !important;
+    border-bottom: 1px solid var(--neon-blue) !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-title,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-title {
+    color: var(--neon-blue) !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-close,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-close {
+    color: var(--neon-blue) !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-close:hover,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-close:hover {
+    color: var(--text-primary) !important;
+    background-color: rgba(0, 243, 255, 0.1) !important;
+}
+
+:where(.css-dev-only-do-not-override-1x0dypw).ant-drawer .ant-drawer-body,
+:where(.css-dev-only-do-not-override-1vr7spz).ant-drawer .ant-drawer-body {
+    padding: 0 !important;
+    background-color: #000000 !important;
+}
+
+.mobile-drawer .nav-menu {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0;
+    gap: 0;
+    background-color: #000000;
+}
+
+.mobile-drawer .nav-item {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.1);
+    font-size: 1rem;
+    color: var(--text-primary);
+    background-color: #000000;
+    transition: all 0.3s ease;
+}
+
+.mobile-drawer .nav-item:hover {
+    background-color: #0a0a0a;
+    color: var(--neon-blue);
+    padding-left: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .nav-menu {
+        gap: 10px;
+    }
+    
+    .nav-item {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+
+    .myHeader {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .myHeader {
+        padding: 12px;
+    }
+}
+
+/* Override any Ant Design popup styles */
+.ant-drawer-mask {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}

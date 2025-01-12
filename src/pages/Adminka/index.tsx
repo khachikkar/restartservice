@@ -1,185 +1,405 @@
-import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
-import {adminPass} from "../../constants/constants";
-import {Button, Form, Input, notification, Select, Upload} from "antd";
-import {useForm} from "antd/es/form/Form";
-import {supabase} from "../../services/supabase/supabase";
+import React, { useEffect, useState } from 'react'
+import { supabase } from '../../services/supabase/supabase'
+import { Button, Form, Input, InputNumber, Modal, Select, Table, Upload } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
+import type { UploadProps } from 'antd'
+import './styles.css'
 
-type bucketParam = {
-    bucket: string;
-    file: File;
-};
+const Admin = () => {
+    const [data, setData] = useState<any[]>([])
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [form] = Form.useForm()
+    const [selectedImage, setSelectedImage] = useState<any>(null)
+    const [editingRecord, setEditingRecord] = useState<any>(null)
+    const [editModalOpen, setEditModalOpen] = useState(false)
+    const [editForm] = Form.useForm()
 
-const uploadFileToBucket = async ({ bucket, file }: bucketParam) => {
-    const fileName = `${Date.now()}`;
-    const { error } = await supabase.storage.from(bucket).upload(fileName, file);
-
-    if (error) {
-        throw new Error(error.message);
+    const showModal = () => {
+        setIsModalOpen(true)
     }
 
-    const { data: publicUrl } = supabase.storage.from(bucket).getPublicUrl(fileName);
-    if (!publicUrl) {
-        throw new Error("Failed to get public URL");
+    const handleOk = () => {
+        setIsModalOpen(false)
     }
 
-    return publicUrl;
-};
+    const handleCancel = () => {
+        setIsModalOpen(false)
+        form.resetFields()
+    }
 
-const Adminka = () => {
-    const navigate = useNavigate();
-    const [form] = useForm();
-    const [load, setLoad] = useState(false);
+    const handleEditCancel = () => {
+        setEditModalOpen(false)
+        editForm.resetFields()
+    }
 
-
-    const handleAddProduct = async (values: any) => {
-
-        console.log(values, "values");
-
-        try {
-            setLoad(true)
-            const file = values.productImageUrl[0]?.originFileObj; // Access file from Upload component
-
-            if (!file) {
-                alert("Please upload a product image.");
-                return;
-            }
-
-            const imageUrl = await uploadFileToBucket({ bucket: "restart", file });
-
-            console.log(imageUrl , "imageUURL");
-
-            const {  error } = await supabase.from("products").insert([
-                {
-                    name: values.productName,
-                    description: values.productDescription,
-                    price: parseFloat(values.productPrice),
-                    image_url: imageUrl,
-                    category: values.productCategory,
-                    prevPrice: values.productPrevPrice,
-                    productCode: values.productCode,
-                },
-            ]);
-
-            if (error) {
-               console.log(error.message);
-            }
-
-           notification.success({
-               message: "Արտադրանքը հաջողությամբ ավելացավ",
-           })
-            form.resetFields();
-        } catch (error) {
-            alert("Error adding product");
-        }finally {
-            setLoad(false)
+    const columns = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'id',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Age',
+            dataIndex: 'age',
+            key: 'age',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Category',
+            dataIndex: 'category',
+            key: 'category',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Brand',
+            dataIndex: 'brand',
+            key: 'brand',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Capacity',
+            dataIndex: 'capacity',
+            key: 'capacity',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+            className: 'admin-table-cell'
+        },
+        {
+            title: 'Actions',
+            key: 'actions',
+            render: (text: string, record: any) => (
+                <div className="action-buttons">
+                    <Button type="primary" onClick={() => handleEdit(record)} className="edit-button">
+                        Edit
+                    </Button>
+                    <Button type="primary" danger onClick={() => handleDelete(record.id)} className="delete-button">
+                        Delete
+                    </Button>
+                </div>
+            ),
+            className: 'admin-table-cell'
         }
-    };
+    ]
+
+    const handleEdit = (record: any) => {
+        setEditingRecord(record)
+        editForm.setFieldsValue(record)
+        setEditModalOpen(true)
+    }
+
+    const handleDelete = async (id: number) => {
+        try {
+            await supabase.from('products').delete().eq('id', id)
+            fetchData()
+        } catch (error) {
+            console.error('Error deleting record:', error)
+        }
+    }
+
+    const props: UploadProps = {
+        beforeUpload: file => {
+            setSelectedImage(file)
+            return false
+        }
+    }
+
+    const fetchData = async () => {
+        try {
+            const { data: productsData, error } = await supabase.from('products').select('*')
+            if (error) throw error
+            setData(productsData)
+        } catch (error) {
+            console.error('Error fetching data:', error)
+        }
+    }
 
     useEffect(() => {
-        const pass: string | null = prompt("Գրեք Ձեր գաղտնաբառը");
-        if (pass === adminPass.password) {
-            alert("Բարի գալուստ!");
-        } else {
-            navigate("/");
+        fetchData()
+    }, [])
+
+    const onFinish = async (values: any) => {
+        try {
+            if (selectedImage) {
+                const { data: imageData, error: uploadError } = await supabase.storage
+                    .from('images')
+                    .upload(`products/${selectedImage.name}`, selectedImage)
+
+                if (uploadError) throw uploadError
+
+                const { data: publicUrlData } = supabase.storage
+                    .from('images')
+                    .getPublicUrl(`products/${selectedImage.name}`)
+
+                if (publicUrlData) {
+                    values.image_url = publicUrlData.publicUrl
+                }
+            }
+
+            const { error } = await supabase.from('products').insert([values])
+            if (error) throw error
+
+            fetchData()
+            setIsModalOpen(false)
+            form.resetFields()
+            setSelectedImage(null)
+        } catch (error) {
+            console.error('Error adding new product:', error)
         }
-    }, [navigate]);
+    }
+
+    const onEditFinish = async (values: any) => {
+        try {
+            if (selectedImage) {
+                const { data: imageData, error: uploadError } = await supabase.storage
+                    .from('images')
+                    .upload(`products/${selectedImage.name}`, selectedImage)
+
+                if (uploadError) throw uploadError
+
+                const { data: publicUrlData } = supabase.storage
+                    .from('images')
+                    .getPublicUrl(`products/${selectedImage.name}`)
+
+                if (publicUrlData) {
+                    values.image_url = publicUrlData.publicUrl
+                }
+            }
+
+            const { error } = await supabase
+                .from('products')
+                .update(values)
+                .eq('id', editingRecord.id)
+
+            if (error) throw error
+
+            fetchData()
+            setEditModalOpen(false)
+            editForm.resetFields()
+            setSelectedImage(null)
+            setEditingRecord(null)
+        } catch (error) {
+            console.error('Error updating product:', error)
+        }
+    }
 
     return (
-        <div style={{ height: "100vh", width: "400px", padding:"10px" }}>
-            <h1>Admin Panel</h1>
-            <Form layout="vertical" form={form} onFinish={handleAddProduct}>
-                <Form.Item
-                    label="Ապրանքի անունը"
-                    name="productName"
-                    rules={[{ required: true, message: "Please enter a Product Name" }]}
-                >
-                    <Input placeholder="օրինակ: Բեկո 50կգ" />
-                </Form.Item>
+        <div className="admin-container">
+            <Button type="primary" onClick={showModal} className="add-button">
+                Add New Product
+            </Button>
 
-                <Form.Item
-                    label="Ապրանքի Նկարագրությունը"
-                    name="productDescription"
-                    rules={[{ required: true, message: "Please enter a Product Description" }]}
-                >
-                    <Input placeholder="օրինակ: Նոր, վերանորոգված կամ օգտագործված" />
-                </Form.Item>
+            <Table 
+                columns={columns} 
+                dataSource={data} 
+                className="admin-table"
+                rowClassName="admin-table-row"
+            />
 
-                <Form.Item
-                    label="Ապրանքի Կոդը"
-                    name="productCode"
-                    rules={[{ required: true, message: "Please enter a Product Code" }]}
-                >
-                    <Input placeholder="օրինակ: 001 կամ 004 ..." />
-                </Form.Item>
-
-                <Form.Item // catregoru
-                    label="Ապրանքի Կատեգորիան"
-                    name="productCategory"
-                    rules={[{ required: true, message: "Please enter a Product Description" }]}
-                >
-                    <Select placeholder="օրինակ: Սառնարան">
-                        {
-                            ["Սառնարան", "ԼվացքիՄեքենա", "Գազօջախ", "Վառարան", "ՍպասքիՄեքենա", "Չորանոց", "Սառցարան"].map((item)=>{
-                                return(
-                                    <Select.Option
-                                        key={item}
-                                        value={item}>
-                                        {item}
-                                    </Select.Option>
-                                )
-                            })
-                        }
-                    </Select>
-                </Form.Item>
-
-                <Form.Item
-                    label="Ապրանքի Նկարը"
-                    name="productImageUrl"
-                    rules={[{ required: true, message: "Please upload a product image." }]}
-                    valuePropName="fileList"
-                    getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
-                >
-                    <Upload
-                        beforeUpload={() => false}
-                        accept="image/*"
-                        maxCount={1}
-                        listType="picture"
+            <Modal
+                title="Add New Product"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                footer={null}
+                className="admin-modal"
+            >
+                <Form form={form} onFinish={onFinish} layout="vertical" className="admin-form">
+                    <Form.Item
+                        label="Ապրանքի անունը"
+                        name="name"
+                        rules={[{ required: true, message: 'Please input the name!' }]}
+                        className="form-item"
                     >
-                        <Button>Բեռնել Նկարը</Button>
-                    </Upload>
-                </Form.Item>
+                        <Input />
+                    </Form.Item>
 
+                    <Form.Item
+                        label="Ապրանքի Նկարագրությունը"
+                        name="description"
+                        rules={[{ required: true, message: 'Please input the description!' }]}
+                        className="form-item"
+                    >
+                        <Input.TextArea />
+                    </Form.Item>
 
-                <Form.Item
-                    label="Ապրանքի Նախկին Գինը"
-                    name="productPrevPrice"
-                    rules={[
-                        { required: true, message: "Please enter a valid Product Previous Price" },
-                        { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: "Price must be a valid number (e.g., 19.99)" },
-                    ]}
-                >
-                    <Input placeholder="օրինակ 30000" />
-                </Form.Item>
+                    <Form.Item
+                        label="Ապրանքի Կոդը"
+                        name="productCode"
+                        rules={[{ required: true, message: 'Please input the product code!' }]}
+                        className="form-item"
+                    >
+                        <Input />
+                    </Form.Item>
 
+                    <Form.Item
+                        label="Ապրանքի Կատեգորիան"
+                        name="category"
+                        rules={[{ required: true, message: 'Please input the category!' }]}
+                        className="form-item"
+                    >
+                        <Select>
+                            <Select.Option value="Սառնարան">Սառնարան</Select.Option>
+                            <Select.Option value="ԼվացքիՄեքենա">ԼվացքիՄեքենա</Select.Option>
+                            <Select.Option value="Գազօջախ">Գազօջախ</Select.Option>
+                            <Select.Option value="Վառարան">Վառարան</Select.Option>
+                            <Select.Option value="ՍպասքիՄեքենա">ՍպասքիՄեքենա</Select.Option>
+                            <Select.Option value="Չորանոց">Չորանոց</Select.Option>
+                            <Select.Option value="Սառցարան">Սառցարան</Select.Option>
+                        </Select>
+                    </Form.Item>
 
-                <Form.Item
-                    label="Ապրանքի Գինը"
-                    name="productPrice"
-                    rules={[
-                        { required: true, message: "Please enter a valid Product Price" },
-                        { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: "Price must be a valid number (e.g., 19.99)" },
-                    ]}
-                >
-                    <Input placeholder="օրինակ 30000" />
-                </Form.Item>
+                    <Form.Item
+                        label="Ապրանքի Նախկին Գինը"
+                        name="prevPrice"
+                        rules={[
+                            { required: true, message: 'Please input the previous price!' },
+                            { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: 'Price must be a valid number (e.g., 19.99)' },
+                        ]}
+                        className="form-item"
+                    >
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
 
-                <Button loading={load} type="primary" htmlType="submit">
-                    Ավելացնել Ապրանք
-                </Button>
-            </Form>
+                    <Form.Item
+                        label="Ապրանքի Գինը"
+                        name="price"
+                        rules={[
+                            { required: true, message: 'Please input the price!' },
+                            { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: 'Price must be a valid number (e.g., 19.99)' },
+                        ]}
+                        className="form-item"
+                    >
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+
+                    <Form.Item label="Ապրանքի Նկարը" className="form-item">
+                        <Upload {...props}>
+                            <Button icon={<UploadOutlined />}>Select Image</Button>
+                        </Upload>
+                    </Form.Item>
+
+                    <Form.Item className="form-buttons">
+                        <Button type="primary" htmlType="submit" className="submit-button">
+                            Submit
+                        </Button>
+                        <Button onClick={handleCancel} className="cancel-button">
+                            Cancel
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
+
+            <Modal
+                title="Edit Product"
+                open={editModalOpen}
+                onCancel={handleEditCancel}
+                footer={null}
+                className="admin-modal"
+            >
+                <Form form={editForm} onFinish={onEditFinish} layout="vertical" className="admin-form">
+                    <Form.Item
+                        label="Ապրանքի անունը"
+                        name="name"
+                        rules={[{ required: true, message: 'Please input the name!' }]}
+                        className="form-item"
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Ապրանքի Նկարագրությունը"
+                        name="description"
+                        rules={[{ required: true, message: 'Please input the description!' }]}
+                        className="form-item"
+                    >
+                        <Input.TextArea />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Ապրանքի Կոդը"
+                        name="productCode"
+                        rules={[{ required: true, message: 'Please input the product code!' }]}
+                        className="form-item"
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Ապրանքի Կատեգորիան"
+                        name="category"
+                        rules={[{ required: true, message: 'Please input the category!' }]}
+                        className="form-item"
+                    >
+                        <Select>
+                            <Select.Option value="Սառնարան">Սառնարան</Select.Option>
+                            <Select.Option value="ԼվացքիՄեքենա">ԼվացքիՄեքենա</Select.Option>
+                            <Select.Option value="Գազօջախ">Գազօջախ</Select.Option>
+                            <Select.Option value="Վառարան">Վառարան</Select.Option>
+                            <Select.Option value="ՍպասքիՄեքենա">ՍպասքիՄեքենա</Select.Option>
+                            <Select.Option value="Չորանոց">Չորանոց</Select.Option>
+                            <Select.Option value="Սառցարան">Սառցարան</Select.Option>
+                        </Select>
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Ապրանքի Նախկին Գինը"
+                        name="prevPrice"
+                        rules={[
+                            { required: true, message: 'Please input the previous price!' },
+                            { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: 'Price must be a valid number (e.g., 19.99)' },
+                        ]}
+                        className="form-item"
+                    >
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Ապրանքի Գինը"
+                        name="price"
+                        rules={[
+                            { required: true, message: 'Please input the price!' },
+                            { pattern: /^[0-9]+(\.[0-9]{1,2})?$/, message: 'Price must be a valid number (e.g., 19.99)' },
+                        ]}
+                        className="form-item"
+                    >
+                        <InputNumber style={{ width: '100%' }} />
+                    </Form.Item>
+
+                    <Form.Item label="Ապրանքի Նկարը" className="form-item">
+                        <Upload {...props}>
+                            <Button icon={<UploadOutlined />}>Select Image</Button>
+                        </Upload>
+                    </Form.Item>
+
+                    <Form.Item className="form-buttons">
+                        <Button type="primary" htmlType="submit" className="submit-button">
+                            Update
+                        </Button>
+                        <Button onClick={handleEditCancel} className="cancel-button">
+                            Cancel
+                        </Button>
+                    </Form.Item>
+                </Form>
+            </Modal>
         </div>
-    );
-};
+    )
+}
 
-export default Adminka;
+export default Admin
