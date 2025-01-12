@@ -17,6 +17,17 @@ export const checkPrice = async (
     name: string,
     description: string,
 ): Promise<PriceCheckResponse> => {
+    const HF_TOKEN = process.env.REACT_APP_HF_API_TOKEN;
+    
+    if (!HF_TOKEN) {
+        console.error('Hugging Face API token not found in environment variables');
+        return {
+            question: '',
+            answer: 'Sorry, there was a configuration error. Please try again later.',
+            error: 'API token not configured'
+        };
+    }
+
     const translatedName = translateArmenianTerms(name);
     const translatedDescription = translateArmenianTerms(description);
 
@@ -31,7 +42,7 @@ The product details are:
             "https://api-inference.huggingface.co/models/google/gemma-2-2b-it",
             {
                 headers: {
-                    Authorization: "Bearer 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",
+                    Authorization: `Bearer ${HF_TOKEN}`,
                     "Content-Type": "application/json",
                 },
                 method: "POST",
@@ -50,9 +61,8 @@ The product details are:
         }
 
         const result = await response.json();
-        console.log('API Response:', result); // Debug log
+        console.log('API Response:', result);
 
-        // Check if result is an array and has the expected structure
         if (!Array.isArray(result) || !result[0]?.generated_text) {
             console.error('Unexpected API response structure:', result);
             return {
@@ -62,7 +72,6 @@ The product details are:
             };
         }
 
-        // Extract just the answer part, removing the prompt
         const fullText = result[0].generated_text;
         const answer = fullText.includes(staticPrompt) 
             ? fullText.slice(staticPrompt.length).trim()
