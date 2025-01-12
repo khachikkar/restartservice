@@ -4,6 +4,7 @@ import {Button, Space} from "antd";
 import {handleClick} from "../../helpers/telnum";
 import {useEffect, useState} from "react";
 import {supabase} from "../../services/supabase/supabase";
+import PriceCheck from "../../components/PriceCheck";
 
 const WashingDetails = () => {
 
@@ -18,18 +19,12 @@ const WashingDetails = () => {
         productCode?: string;
     };
 
+    const [searchParams] = useSearchParams();
+    const id = Number(searchParams.get("id"))
 
+    console.log( id, "id from search");
 
-
-const [searchParams] = useSearchParams();
-const id = Number(searchParams.get("id"))
-
-console.log( id, "id from search");
-
-
-
-const [mdata, setMdata] = useState<DataType[]>([])
-
+    const [mdata, setMdata] = useState<DataType[]>([])
 
     const getProducts = async () => {
         try {
@@ -41,8 +36,6 @@ const [mdata, setMdata] = useState<DataType[]>([])
                 throw new Error(error.message);
             }
 
-
-
             console.log(data, "data")
             setMdata(data)
         } catch (error) {
@@ -51,18 +44,12 @@ const [mdata, setMdata] = useState<DataType[]>([])
         }
     };
 
-
-
-
     useEffect(() => {
         getProducts()
 
     }, [])
 
     console.log(mdata, "mdata")
-
-
-
 
     const data =      mdata ?  mdata?.find(item => item.id === id) : {}
     let image = "";
@@ -76,13 +63,6 @@ const [mdata, setMdata] = useState<DataType[]>([])
 
     return (
         <div className="wDetails">
-
-
-
-
-
-
-
             {data ? (
                 <>
                     <h2>{data.name}</h2>
@@ -99,21 +79,36 @@ const [mdata, setMdata] = useState<DataType[]>([])
                                 <p>{data.name}</p>
                             </Space>
                             <div>
+                                <Space>
+                                    <h4>Գին</h4>
+                                    <p>{data.price}֏</p>
+                                </Space>
+                                {data.prevPrice && (
+                                    <Space>
+                                        <h4>Հին Գին</h4>
+                                        <p>{data.prevPrice}֏</p>
+                                    </Space>
+                                )}
+                            </div>
+                            <div>
                                 <h4>Նկարագրություն</h4>
-                                <p className="dDesc">{data.description}</p>
+                                <p>{data.description}</p>
                             </div>
-                            <div className="price">
-                                <p>{data.prevPrice}</p>
-                                <h3>{data.price} Դրամ</h3>
-                                <Button type="primary" onClick={handleClick}>
-                                    Զանգեք հիմա
-                                </Button>
-                            </div>
+                            {data.price && data.name && data.description && (
+                                <PriceCheck
+                                    price={data.price}
+                                    name={data.name}
+                                    description={data.description}
+                                />
+                            )}
+                            <Button type="primary" onClick={handleClick}>
+                                Զանգեք Մեզ
+                            </Button>
                         </div>
                     </div>
                 </>
             ) : (
-                <p>Loading...</p>
+                <div>Loading...</div>
             )}
         </div>
     );

@@ -1,0 +1,184 @@
+.price-check-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.price-check-button {
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    font-size: 1rem !important;
+    height: auto !important;
+    padding: 10px 20px !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+}
+
+.price-check-button .ai-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+.price-check-button .ai-icon svg {
+    width: 24px;
+    height: 24px;
+    color: #ffffff;
+}
+
+/* Sparkle animations */
+.price-check-button .sparkle-1 {
+    animation: twinkle 1.5s infinite;
+}
+
+.price-check-button .sparkle-2 {
+    animation: twinkle 1.5s infinite 0.5s;
+}
+
+.price-check-button .sparkle-3 {
+    animation: twinkle 1.5s infinite 1s;
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0;
+        transform: scale(0.3) rotate(0deg);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1) rotate(180deg);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0.3) rotate(360deg);
+    }
+}
+
+.price-check-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    background: #1a1a1a !important;
+}
+
+.price-check-button:hover .ai-icon svg {
+    animation: magical-spin 2s infinite;
+}
+
+@keyframes magical-spin {
+    0% {
+        transform: scale(1) rotate(0deg);
+    }
+    25% {
+        transform: scale(1.1) rotate(90deg);
+    }
+    50% {
+        transform: scale(1) rotate(180deg);
+    }
+    75% {
+        transform: scale(1.1) rotate(270deg);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+    }
+}
+
+.price-check-button:disabled {
+    opacity: 0.7;
+    transform: none;
+    box-shadow: none;
+    background: #333333 !important;
+}
+
+.price-check-button:disabled .ai-icon svg {
+    animation: none;
+}
+
+.price-check-response {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--neon-blue);
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    max-width: 500px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.price-check-response.error {
+    border-color: var(--neon-red);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.typing-text {
+    color: var(--text-primary);
+    font-size: 1rem;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.error .typing-text {
+    color: var(--neon-red);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Loading spinner styles */
+.ant-spin-dot-item {
+    background-color: var(--neon-blue) !important;
+}
+
+.error .ant-spin-dot-item {
+    background-color: var(--neon-red) !important;
+}
+
+/* Loading state styles */
+.price-check-button.ant-btn-loading {
+    background: #1a1a1a !important;
+    opacity: 0.9;
+}
+
+.price-check-button .ant-btn-loading-icon {
+    color: #ffffff !important;
+}
+
+/* Hide loading icon when showing custom icon */
+.price-check-button.ant-btn-loading .ant-btn-loading-icon {
+    display: none !important;
+}
+
+.price-check-button.ant-btn-loading .ai-icon svg {
+    animation: magical-loading 1s linear infinite !important;
+}
+
+@keyframes magical-loading {
+    0% {
+        transform: scale(1) rotate(0deg);
+        filter: brightness(1);
+    }
+    50% {
+        transform: scale(1.1) rotate(180deg);
+        filter: brightness(1.5);
+    }
+    100% {
+        transform: scale(1) rotate(360deg);
+        filter: brightness(1);
+    }
+}
