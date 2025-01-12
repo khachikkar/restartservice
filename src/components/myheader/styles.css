@@ -7,8 +7,7 @@
     background-color: var(--dark-bg);
     border-bottom: 1px solid white;
     box-shadow: var(--neon-glow-blue);
-    position: fixed;
-    z-index: 10;
+
 }
 
 .header-left,
