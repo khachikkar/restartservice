@@ -1,5 +1,5 @@
 import { Button, Drawer } from "antd";
-import logo from "../../img/logo.png"
+import logo from "../../img/logo_ai.png"
 import { Link } from "react-router-dom";
 import { handleClick } from "../../helpers/telnum";
 import { useState, useEffect } from "react";
