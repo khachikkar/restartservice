@@ -316,7 +316,7 @@ const Admin = () => {
                         size="middle"
                         icon={<EditOutlined />}
                     >
-                        Edit
+                        Փոփոխել
                     </Button>
                     <Button 
                         type="primary" 
@@ -326,7 +326,7 @@ const Admin = () => {
                         size="middle"
                         icon={<DeleteOutlined />}
                     >
-                        Delete
+                        Ջնջել
                     </Button>
                 </div>
             )
@@ -365,7 +365,7 @@ const Admin = () => {
                         className="add-button"
                         size="middle"
                     >
-                        Add New Product
+                        Ավելացնել Նոր Արտադրանք
                     </Button>
                     <Button 
                         onClick={handleLogout} 
@@ -373,7 +373,7 @@ const Admin = () => {
                         className="logout-button"
                         size="middle"
                     >
-                        Logout
+                        Դուրս Գալ Ադմին վիճակից
                     </Button>
                 </div>
             </div>
@@ -394,7 +394,7 @@ const Admin = () => {
             />
 
             <Modal
-                title="Add New Product"
+                title="Ավելացնել Նոր Արտադրանք"
                 open={isModalOpen}
                 onOk={handleOk}
                 onCancel={handleCancel}
@@ -403,7 +403,7 @@ const Admin = () => {
             >
                 <Form form={form} onFinish={onFinish} layout="vertical" className="admin-form">
                     <Form.Item
-                        label="Name"
+                        label="Անուն"
                         name="name"
                         rules={[{ required: true, message: 'Please input the name!' }]}
                         className="form-item"
@@ -412,7 +412,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Code"
+                        label="Կոդ"
                         name="productCode"
                         rules={[{ required: true, message: 'Please input the Code!' }]}
                         className="form-item"
@@ -421,7 +421,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Price"
+                        label=" Նոր Գին"
                         name="price"
                         rules={[{ required: true, message: 'Please input the price!' }]}
                         className="form-item"
@@ -430,7 +430,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Price"
+                        label="Հին Գին"
                         name="prevPrice"
                         rules={[{ required: true, message: 'Please input the Prev price!' }]}
                         className="form-item"
@@ -439,7 +439,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Category"
+                        label="Կատեգորիա"
                         name="category"
                         rules={[{ required: true, message: 'Please select the category!' }]}
                         className="form-item"
@@ -456,7 +456,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Description"
+                        label="Կարգավիճակ"
                         name="description"
                         rules={[{ required: true, message: 'Please input the description!' }]}
                         className="form-item"
@@ -464,7 +464,7 @@ const Admin = () => {
                         <Input.TextArea />
                     </Form.Item>
 
-                    <Form.Item label="Image" className="form-item">
+                    <Form.Item label="Վերբեռնեք նկարը" className="form-item">
                         <Upload {...props}>
                             <Button icon={<UploadOutlined />}>Select Image</Button>
                         </Upload>
@@ -472,17 +472,17 @@ const Admin = () => {
 
                     <Form.Item className="form-buttons">
                         <Button type="primary" htmlType="submit" className="submit-button">
-                            Submit
+                            Հաստատել
                         </Button>
                         <Button onClick={handleCancel} className="cancel-button">
-                            Cancel
+                            Չեղարկել
                         </Button>
                     </Form.Item>
                 </Form>
             </Modal>
 
             <Modal
-                title="Edit Product"
+                title="Փոփոխել Տվյալները"
                 open={editModalOpen}
                 onCancel={handleEditCancel}
                 footer={null}
@@ -490,7 +490,7 @@ const Admin = () => {
             >
                 <Form form={editForm} onFinish={onEditFinish} layout="vertical" className="admin-form">
                     <Form.Item
-                        label="Name"
+                        label="Անուն"
                         name="name"
                         rules={[{ required: true, message: 'Please input the name!' }]}
                         className="form-item"
@@ -499,7 +499,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Price"
+                        label="Նոր Գին"
                         name="price"
                         rules={[{ required: true, message: 'Please input the price!' }]}
                         className="form-item"
@@ -508,7 +508,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Category"
+                        label="Կատեգորիա"
                         name="category"
                         rules={[{ required: true, message: 'Please select the category!' }]}
                         className="form-item"
@@ -525,7 +525,7 @@ const Admin = () => {
                     </Form.Item>
 
                     <Form.Item
-                        label="Description"
+                        label="Կարգավիճակ"
                         name="description"
                         rules={[{ required: true, message: 'Please input the description!' }]}
                         className="form-item"
@@ -533,7 +533,7 @@ const Admin = () => {
                         <Input.TextArea />
                     </Form.Item>
 
-                    <Form.Item label="Image" className="form-item">
+                    <Form.Item label="Նկարը" className="form-item">
                         <Upload {...props}>
                             <Button icon={<UploadOutlined />}>Select Image</Button>
                         </Upload>
@@ -541,10 +541,10 @@ const Admin = () => {
 
                     <Form.Item className="form-buttons">
                         <Button type="primary" htmlType="submit" className="submit-button">
-                            Update
+                            Փոփոխել
                         </Button>
                         <Button onClick={handleEditCancel} className="cancel-button">
-                            Cancel
+                            Չեղարկել
                         </Button>
                     </Form.Item>
                 </Form>

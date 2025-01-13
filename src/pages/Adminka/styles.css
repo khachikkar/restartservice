@@ -33,9 +33,8 @@
 }
 
 .logout-button {
-    background-color: #ff4d4f;
-    border-color: #ff4d4f;
-    color: white;
+    background-color: red;
+    color: black;
     height: 40px;
     padding: 0 20px;
     font-size: 14px;
@@ -221,7 +220,7 @@
 }
 
 .admin-form .ant-input,
-.admin-form .ant-input-number,
+.admin-form ,
 .admin-form .ant-select-selector,
 .admin-form .ant-input-textarea {
     background-color: #141414;
@@ -249,7 +248,7 @@
 
 .admin-form .ant-select-selection-placeholder,
 .admin-form .ant-select-selection-item {
-    color: white !important;
+    color: black !important;
 }
 
 .admin-form .ant-upload {
